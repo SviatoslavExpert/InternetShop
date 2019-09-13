@@ -1,5 +1,7 @@
 package mate.academy.internetshop.model;
 
+import mate.academy.internetshop.BucketIdGenerator;
+
 import java.util.List;
 
 public class Bucket {
@@ -7,6 +9,10 @@ public class Bucket {
     private List<Item> items;
     private Long orderId;
     //private User user; // ?
+
+    public Bucket() {
+        this.id = BucketIdGenerator.getGeneratedId();
+    }
 
     public Long getId() {
         return id;

@@ -14,16 +14,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-
     @Inject
-    private OrderDao orderDao;
-
+    private static OrderDao orderDao;
     @Inject
-    private UserDao userDao;
+    private static UserDao userDao;
 
     @Override
     public Order create(Order order) {
-        return orderDao.create(order);
+        return orderDao.add(order);
     }
 
     @Override
@@ -42,29 +40,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(Order order) {
-        orderDao.delete(order);
-    }
-
-    @Override
-    public Order completeOrder(Long userId, List<Item> items) {
-        Order order = new Order(userId, items);
+    public Order completeOrder(List<Item> items, Long userId) {
+        Order order = new Order(items, userId);
         orderDao.add(order);
         userDao.get(userId).getOrders().add(order);
         return order;
     }
-
-/*    @Override
-    public Order completeOrder(Bucket bucket) {
-        // 1. GEt list of items and userId
-        // 2. Delete the bucket if item was "registered" (оформлений) successfully
-        return null;
-    }*/
 
     @Override
     public List<Order> getAllOrdersForUser(Long userId) {
         return Storage.orders.stream()
                 .filter(o -> o.getUserId().equals(userId))
                 .collect(Collectors.toList());
+
     }
 }

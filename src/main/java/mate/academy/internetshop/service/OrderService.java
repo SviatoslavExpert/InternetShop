@@ -7,7 +7,6 @@ import mate.academy.internetshop.model.Order;
 import java.util.List;
 
 public interface OrderService {
-
     Order create(Order order);
 
     Order get(Long id);
@@ -16,12 +15,7 @@ public interface OrderService {
 
     void delete(Long id);
 
-    void delete(Order order);
-
-    Order completeOrder(Long userId, List<Item> items);
-
-    //Order completeOrder(Bucket bucket);
+    Order completeOrder(List<Item> items, Long userId);
 
     List<Order> getAllOrdersForUser(Long userId);
-
 }

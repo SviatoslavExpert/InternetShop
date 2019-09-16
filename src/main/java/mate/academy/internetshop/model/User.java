@@ -1,32 +1,37 @@
 package mate.academy.internetshop.model;
 
-import mate.academy.internetshop.UserIdGenerator;
-
+import java.util.ArrayList;
 import java.util.List;
 
-import static mate.academy.internetshop.dao.Storage.orders;
-
 public class User {
-    private final Long userId;
-    private String name;
+    private static String name;
+    private static long idGenerator = 0;
+    private Long id;
+    private List<Order> orders;
 
-    public User() {
-        this.userId = UserIdGenerator.getGeneratedId();
+    public User(String name) {
+        this.name = name;
+        id = idGenerator++;
+        orders = new ArrayList<>();
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public static void setName(String name) {
+        User.name = name;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public List<Order> getOrders() {
         return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

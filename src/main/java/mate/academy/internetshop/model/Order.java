@@ -1,30 +1,37 @@
 package mate.academy.internetshop.model;
 
-import mate.academy.internetshop.OrderIdGenerator;
-
-import javax.print.attribute.standard.DateTimeAtProcessing;
 import java.util.List;
 
 public class Order {
-    private final Long id;
-    private final Long userId;
-    private final List<Item> items;
+    private static long idGenerator = 0;
+    private Long id;
+    private List<Item> items;
+    private Long userId;
 
-    public Order(Long userId, List<Item> items) {
-        this.userId = userId;
+    public Order(List<Item> items, Long userId) {
+        id = idGenerator++;
         this.items = items;
-        this.id = OrderIdGenerator.getGeneratedId();
+        this.userId = userId;
     }
 
     public Long getId() {
         return id;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
     public Long getUserId() {
         return userId;
     }
 
-    public List<Item> getItems() {
-        return items;
+    @Override
+    public String toString() {
+        return "Order id = " + id + ", user id = " + userId + "\n" + items;
     }
 }

@@ -13,7 +13,5 @@ public interface UserService {
 
     void delete(Long id);
 
-    void delete(User user);
-
-    List getOrders(Long userId);
+    List getOrders(Long id);
 }

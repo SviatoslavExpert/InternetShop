@@ -10,54 +10,57 @@ import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
 import mate.academy.internetshop.service.OrderService;
 import mate.academy.internetshop.service.UserService;
-import mate.academy.internetshop.service.impl.BucketServiceImpl;
-import mate.academy.internetshop.service.impl.ItemServiceImpl;
-import mate.academy.internetshop.service.impl.OrderServiceImpl;
-import mate.academy.internetshop.service.impl.UserServiceImpl;
 
 import java.util.List;
 
 public class Main {
-
     static {
         try {
-            Injector.injectDependency();
+            Injector.injectDependencies();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
     @Inject
-    private static ItemService itemService;
-    @Inject
-    private static BucketService bucketService;
+    private static UserService userService;
     @Inject
     private static OrderService orderService;
     @Inject
-    private static UserService userService;
+    private static ItemService itemService;
+    @Inject
+    private static BucketService bucketService;
 
     public static void main(String[] args) {
-        BucketService bucketService = new BucketServiceImpl();
-        ItemService itemService = new ItemServiceImpl();
-        UserService userService = new UserServiceImpl();
-        OrderService orderService = new OrderServiceImpl();
 
-        Item item = new Item();
-        item.setName("iPhone 11");
-        itemService.create(item);
+        User mike = userService.create(new User("Mike"));
+        User tom = userService.create(new User("Tom"));
 
-        User user = new User();
-        userService.create(user);
+        Bucket bucketMike = new Bucket(mike.getId());
+        bucketService.create(bucketMike);
 
-        Bucket bucket = new Bucket(user.getUserId());
-        bucketService.create(bucket);
-        bucketService.addItem(bucket.getId(), item.getId());
+        Bucket bucketTom = new Bucket(mike.getId());
+        bucketService.create(bucketTom);
 
-        orderService.completeOrder(user.getUserId(), bucket.getItems());
-        bucketService.remove(bucket.getId());
+        Item phone = itemService.create(new Item("iPhone", 30000.0));
+        Item laptop = itemService.create(new Item("Samsung", 25000.0));
+        Item tab = itemService.create(new Item("Lenovo", 10000.0));
 
-        List<Order> allOrdersForUser = orderService.getAllOrdersForUser(user.getUserId());
-        allOrdersForUser.stream().forEach(System.out::println);
+        bucketService.addItem(bucketMike.getId(), phone.getId());
+        bucketService.addItem(bucketMike.getId(), laptop.getId());
+        bucketService.addItem(bucketTom.getId(), tab.getId());
 
+        orderService.completeOrder(bucketMike.getItems(), mike.getId());
+        bucketService.clear(bucketMike.getId());
+
+        orderService.completeOrder(bucketTom.getItems(), tom.getId());
+        bucketService.clear(bucketTom.getId());
+
+        List<Order> allOrdersForUserMike = orderService.getAllOrdersForUser(mike.getId());
+        allOrdersForUserMike.forEach(System.out::println);
+
+        System.out.println();
+        List<Order> allOrdersForUserTom = orderService.getAllOrdersForUser(tom.getId());
+        allOrdersForUserTom.forEach(System.out::println);
     }
 }

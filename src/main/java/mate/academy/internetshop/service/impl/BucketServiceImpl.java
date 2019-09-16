@@ -12,16 +12,14 @@ import java.util.List;
 
 @Service
 public class BucketServiceImpl implements BucketService {
-
     @Inject
-    private BucketDao bucketDao;
-
+    private static BucketDao bucketDao;
     @Inject
-    private ItemDao itemDao;
+    private static ItemDao itemDao;
 
     @Override
     public Bucket create(Bucket bucket) {
-        return bucketDao.create(bucket);
+        return bucketDao.add(bucket);
     }
 
     @Override
@@ -40,16 +38,6 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public void delete(Bucket bucket) {
-        bucketDao.delete(bucket);
-    }
-
-    @Override
-    public void remove(Long id) {
-        bucketDao.delete(id);
-    }
-
-    @Override
     public Bucket addItem(Long bucketId, Long itemId) {
         Bucket bucket = bucketDao.get(bucketId);
         Item item = itemDao.get(itemId);
@@ -60,7 +48,7 @@ public class BucketServiceImpl implements BucketService {
     @Override
     public Bucket clear(Long bucketId) {
         Bucket bucket = bucketDao.get(bucketId);
-        bucket.getItems().clear();;
+        bucket.clear();
         return bucket;
     }
 

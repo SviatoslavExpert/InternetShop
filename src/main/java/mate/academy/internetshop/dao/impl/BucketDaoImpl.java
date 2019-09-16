@@ -27,4 +27,14 @@ public class BucketDaoImpl implements BucketDao {
     public Bucket update(Bucket bucket) {
         return null;
     }
+
+    @Override
+    public Bucket delete(Long id) {
+        return null;
+    }
+
+    @Override
+    public Bucket delete(Bucket bucket) {
+        return null;
+    }
 }

@@ -3,9 +3,7 @@ package mate.academy.internetshop.dao;
 import mate.academy.internetshop.model.Item;
 
 public interface ItemDao {
-    // CRUD
-
-    Item create(Item item);
+    Item add(Item item);
 
     Item get(Long id);
 
@@ -14,5 +12,4 @@ public interface ItemDao {
     void delete(Long id);
 
     void delete(Item item);
-
 }

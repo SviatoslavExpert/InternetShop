@@ -3,8 +3,6 @@ package mate.academy.internetshop.service;
 import mate.academy.internetshop.model.Item;
 
 public interface ItemService {
-    // CRUD
-
     Item create(Item item);
 
     Item get(Long id);
@@ -14,5 +12,4 @@ public interface ItemService {
     void delete(Long id);
 
     void delete(Item item);
-
 }

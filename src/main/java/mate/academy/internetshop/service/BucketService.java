@@ -1,10 +1,22 @@
 package mate.academy.internetshop.service;
 
 import mate.academy.internetshop.model.Bucket;
+import mate.academy.internetshop.model.Item;
+
+import java.util.List;
 
 public interface BucketService {
+    Bucket create(Bucket bucket);
 
-    // ToDo: CRUD operations
+    Bucket get(Long id);
+
+    Bucket update(Bucket bucket);
+
+    void delete(Long id);
 
     Bucket addItem(Long bucketId, Long itemId);
+
+    Bucket clear(Long bucketId);
+
+    List getAllItems(Long bucketId);
 }

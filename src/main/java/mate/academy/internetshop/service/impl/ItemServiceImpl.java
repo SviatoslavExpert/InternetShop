@@ -1,15 +1,19 @@
 package mate.academy.internetshop.service.impl;
 
+import mate.academy.internetshop.annotations.Inject;
+import mate.academy.internetshop.annotations.Service;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
 
 @Service
 public class ItemServiceImpl implements ItemService {
-    private ItemDao itemDao;
+    @Inject
+    private static ItemDao itemDao;
+
     @Override
     public Item create(Item item) {
-        return itemDao.create(item);
+        return itemDao.add(item);
     }
 
     @Override
